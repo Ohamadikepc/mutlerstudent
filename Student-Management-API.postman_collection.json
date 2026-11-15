@@ -1,0 +1,516 @@
+{
+  "info": {
+    "name": "Student Management API",
+    "description": "Student Management REST API (Node.js, Express, MySQL, Sequelize, Multer, Express Validator). Demonstrates upload.single(), upload.array() and upload.fields().",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create student",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students"
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fullName",
+              "value": "John Dubem",
+              "type": "text"
+            },
+            {
+              "key": "email",
+              "value": "john@gmail.com",
+              "type": "text"
+            },
+            {
+              "key": "phone",
+              "value": "08022783639",
+              "type": "text"
+            },
+            {
+              "key": "department",
+              "value": "Computer Science",
+              "type": "text"
+            },
+            {
+              "key": "profileImage",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "description": "Task A - upload.single('profileImage'). Pick a JPG/PNG file for profileImage."
+      },
+      "response": []
+    },
+    {
+      "name": "Get all students",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get one student",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update student",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students",
+            "1"
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "fullName",
+              "value": "John Updated",
+              "type": "text"
+            },
+            {
+              "key": "profileImage",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "description": "Send a new profileImage to replace the old one. Leave the file out to keep the old image."
+      },
+      "response": []
+    },
+    {
+      "name": "Upload gallery",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students/1/gallery",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students",
+            "1",
+            "gallery"
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "galleryImages",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "galleryImages",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "galleryImages",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "description": "Task B - upload.array('galleryImages', 5). Pick up to 5 images. Existing gallery images are kept."
+      },
+      "response": []
+    },
+    {
+      "name": "Upload images",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students/1/images",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students",
+            "1",
+            "images"
+          ]
+        },
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "passportImage",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "identityCardImage",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "profileImage",
+              "type": "file",
+              "src": []
+            },
+            {
+              "key": "galleryImages",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "description": "Task C - upload.fields(). Pick an image for each field. galleryImages accepts up to 5."
+      },
+      "response": []
+    },
+    {
+      "name": "Validation tests",
+      "item": [
+        {
+          "name": "FAIL - Duplicate email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullName",
+                  "value": "Another Person",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "john@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "08011111111",
+                  "type": "text"
+                },
+                {
+                  "key": "department",
+                  "value": "Law",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "Expect 400: Email already exists (run Create student first)."
+          },
+          "response": []
+        },
+        {
+          "name": "FAIL - Missing full name",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "email",
+                  "value": "new@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "08011111111",
+                  "type": "text"
+                },
+                {
+                  "key": "department",
+                  "value": "Law",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "Expect 400: Full name is required."
+          },
+          "response": []
+        },
+        {
+          "name": "FAIL - Student not found (gallery)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/999/gallery",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students",
+                "999",
+                "gallery"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Pick any image. Expect 400: Student does not exist."
+          },
+          "response": []
+        },
+        {
+          "name": "FAIL - Wrong file type",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullName",
+                  "value": "Test User",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "pdf@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "08022222222",
+                  "type": "text"
+                },
+                {
+                  "key": "department",
+                  "value": "Law",
+                  "type": "text"
+                },
+                {
+                  "key": "profileImage",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Pick a PDF (or any non-image) for profileImage. Expect 400: Only JPG, JPEG and PNG images are allowed."
+          },
+          "response": []
+        },
+        {
+          "name": "FAIL - Image larger than 2MB",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullName",
+                  "value": "Big File",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "big@gmail.com",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "08033333333",
+                  "type": "text"
+                },
+                {
+                  "key": "department",
+                  "value": "Law",
+                  "type": "text"
+                },
+                {
+                  "key": "profileImage",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Pick an image bigger than 2MB. Expect 400: File too large."
+          },
+          "response": []
+        },
+        {
+          "name": "FAIL - Too many gallery images",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/1/gallery",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "students",
+                "1",
+                "gallery"
+              ]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "galleryImages",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "description": "Pick 6 images. Expect 400: Unexpected field / too many files."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Delete student",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/students/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "students",
+            "1"
+          ]
+        },
+        "description": "Run this LAST. Removes the student and all of the student's images from the upload folder."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3456"
+    }
+  ]
+}
